@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../template/layout.xhtml">
+        
+        <ui:define name="content">
+        	
+            <h:form id="formCadastroCliente"  prependId="false">
+            	
+            	<ui:include src="/views/template/menu.xhtml"></ui:include>
+            	
+                <p:growl id="messageGrowl" />
+
+                 <p:divider align="left">
+	                     <div class="inline-flex align-items-center">
+	                       	<i class="pi pi-user mr-2"/>
+	                     	<b>Cadastro de Clientes</b>
+	                     </div>
+	                </p:divider>
+	                
+                
+                  <div class="card">
+				    <style>
+				        /* reset on the showcase style*/
+				        body .ui-panelgrid .ui-panelgrid-cell {
+				            background-color: transparent;
+				        }
+				
+				        /* example use of styles for your form */
+				        .my-heading-row {
+				            background-color: var(--surface-c);
+				            font-weight: bold;
+				        }
+				    </style>
+				
+				    <p:panelGrid id="panel-cadastro" 
+				    			 columns="4"
+				                 columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2"
+				                 layout="grid"
+				                 styleClass="ui-panelgrid-blank ui-fluid"
+				                 style="border:0px none; background-color:transparent;">
+				
+				
+				        <p:outputLabel for="nome" value="Nome"/>
+				        <p:inputText id="nome" maxlength="100" value="#{cadastroClienteBean.pessoa.nome}" required="true"  />
+				
+				        <p:outputLabel for="@next" value="Nascimento"/>
+				        <p:datePicker id="nascimento" value="#{cadastroClienteBean.pessoa.dataNascimento}" showIcon="true"  pattern="dd/MM/yyyy" required="true" style="width:auto"/>
+				
+				        <p:outputLabel for="@next" value="Sexo"/>
+				        <p:selectOneMenu id="selectSexo" value="#{cadastroClienteBean.pessoa.sexo}" required="true" >
+				            <f:selectItem itemLabel="Selecione" itemValue=""/>
+				            <f:selectItem itemLabel="Masculino" itemValue="M"/>
+				            <f:selectItem itemLabel="Feminino" itemValue="F"/>
+				        </p:selectOneMenu>
+				
+						<p:spacer></p:spacer>
+						
+						 <p:row>
+				            <p:column styleClass="ui-grid-col-8">
+						        <p:divider align="left">
+				                     <div class="inline-flex align-items-center">
+				                       	<i class="pi pi-home mr-2"/>
+				                     	<b>Endereço</b>
+				                     </div>
+				                </p:divider>
+							</p:column>
+						</p:row>
+						
+				        <p:outputLabel for="@next" value="Estado"/>
+						<p:selectOneMenu id="estado" value="#{cadastroClienteBean.pessoa.endereco.estado}" required="true" >
+		                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+		                    <f:selectItems value="#{cadastroClienteBean.mapEstado}"/>
+		                </p:selectOneMenu>
+				
+				
+				        <p:outputLabel for="@next" value="Cidade"/>
+				        <p:inputText  id="cidade" maxlength="30" value="#{cadastroClienteBean.pessoa.endereco.cidade}" placeholder="informe o nome da cidade" required="true" />
+				
+				        <p:outputLabel for="@next" value="Logradouro"/>
+				        <p:inputText  id="logradouro" maxlength="30" value="#{cadastroClienteBean.pessoa.endereco.logradouro}" placeholder="informe o logradouro" required="true"/>
+				
+				        <p:outputLabel for="@next" value="CEP"/>
+				        <p:inputText id="cep" maxlength="10" value="#{cadastroClienteBean.pessoa.endereco.cep}" required="true"/>
+				
+				        <p:outputLabel for="@next" value="Número"/>
+				        <p:inputText id="numero" maxlength="10" value="#{cadastroClienteBean.pessoa.endereco.numero}" placeholder="informe o número" required="true"/>
+				
+				        <p:row>
+				            <p:column styleClass="ui-grid-col-8">
+				                <p:commandButton value="Cadastrar" update="panel-cadastro messageGrowl" styleClass="ui-button-raised ui-button-success button-large"
+		                         action="#{cadastroClienteBean.cadastrar()}"  style="width: auto; margin-left:10px;"/>
+		                         
+		                         <p:commandButton value="Limpar" update="panel-cadastro" styleClass="ui-button-raised ui-button-success button-large"
+		                         action="#{cadastroClienteBean.limparCampos()}"   process="@this" style="width: auto; margin-left:10px;"/>
+                         
+				            </p:column>
+				        </p:row>
+				    </p:panelGrid>
+			    </div>
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>

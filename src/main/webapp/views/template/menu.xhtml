@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	
+		<p:menubar>
+            <p:menuitem value="Cadastro" icon="pi pi-fw pi-user" action="cadastroCliente"/>
+            <p:menuitem value="Consulta" icon="pi pi-fw pi-search" action="consultaCliente"  process="@this"  />
+
+            <p:divider layout="vertical"/>
+
+            <p:menuitem value="Sobre" icon="pi pi-fw pi-directions" onclick="PF('dlg').show()"/>
+            
+            <f:facet name="options">
+               <b>Desafio Sinerji</b> 
+            </f:facet>
+        </p:menubar>
+        
+        <p:dialog header="Sobre nós" widgetVar="dlg" minHeight="40" width="350" showEffect="fade"  modal="true">
+        	
+        		<div style="background-color: #020B2A; text-align: center;">
+	        		<h:graphicImage value="/imagens/logo.jpeg" style="width:80px; height:80px;" styleClass="text-center"></h:graphicImage>
+			   	</div>
+			   
+			    <p class="m-0">Nossos projetos são cooperativos e adaptáveis para qualquer segmento ou modelo de negócio. Contamos com um time multidisciplinar, comprometido e experiente.</p>
+			    <p>
+			    	<b>Inovação e sinergia</b>
+			    	<hr/>
+					Nossos projetos são cooperativos e adaptáveis para qualquer segmento ou modelo de negócio. 
+					Contamos com um time multidisciplinar,
+					comprometido e experiente.
+				</p>
+			
+		</p:dialog>
+  
+</html>

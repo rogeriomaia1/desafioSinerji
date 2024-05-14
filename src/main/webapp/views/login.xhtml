@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+  	<h:head>
+        <title>Sinergi</title>
+    </h:head>
+        
+      <h:body>
+		<div style="display:flex;justify-content:center;align-items:center; width:auto;">
+        	
+            <h:form id="formLogin"  prependId="false">
+               
+               <p:growl id="messageGrowl" />
+
+               <p:divider align="left">
+                     <div class="inline-flex align-items-center">
+                       	<i class="pi pi-key mr-2"/>
+                     	<b>Autenticação</b>
+                     </div>
+                </p:divider>
+                
+                <div class="card" style="width:400px;">
+				    <style>
+				        /* reset on the showcase style*/
+				        body .ui-panelgrid .ui-panelgrid-cell {
+				            background-color: transparent;
+				        }
+				
+				        /* example use of styles for your form */
+				        .my-heading-row {
+				            background-color: var(--surface-c);
+				            font-weight: bold;
+				        }
+				    </style>
+				
+				    <p:panelGrid columns="2"
+				                 columnClasses="ui-grid-col-2,ui-grid-col-8"
+				                 layout="grid"
+				                 styleClass="ui-panelgrid-blank ui-fluid"
+				                 style="border:0px none; background-color:transparent;">
+				
+				
+				        <p:outputLabel  for="@next" value="Login" />
+               			<p:inputText id="login" value="#{loginBean.login}" placeholder="informe seu login" required="true" />
+				
+				        <p:outputLabel  for="@next" value="Senha" />
+				        <p:inputText type="password" id="senha" value="#{loginBean.senha}" placeholder="informe sua senha" required="true" />
+                
+	               		<p:row>
+	               			<p:column styleClass="ui-grid-col-4">
+			                    <p:commandButton value="OK"  styleClass="ui-button-raised ui-button-success " style="margin-left:135px"
+			                     action="#{loginBean.realizarLogin()}" update="@form"/>
+		                     </p:column>
+	                    </p:row>
+	               
+                	</p:panelGrid>
+                </div>
+                
+            </h:form>
+         </div>
+    </h:body>     
+       
+</html>

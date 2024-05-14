@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../template/layout.xhtml">
+        
+        <ui:define name="content">
+        
+        <h:form id="formConsulta"  prependId="false">
+        
+        	<ui:include src="/views/template/menu.xhtml"></ui:include>
+        
+          	<p:growl id="messageGrowl" />
+           
+           	<div class="card">
+				    <style>
+				        /* reset on the showcase style*/
+				        body .ui-panelgrid .ui-panelgrid-cell {
+				            background-color: transparent;
+				        }
+				
+				        /* example use of styles for your form */
+				        .my-heading-row {
+				            background-color: var(--surface-c);
+				            font-weight: bold;
+				        }
+				    </style>
+				
+				
+				   <p:divider align="left">
+	                     <div class="inline-flex align-items-center">
+	                       	<i class="pi pi-search mr-2"/>
+	                     	<b>Consulta de Clientes</b>
+	                     </div>
+	                </p:divider>
+	                
+				    <p:panelGrid id="sessaoFiltro" columns="12"
+					             columnClasses="ui-grid-col-1,ui-grid-col-2,ui-grid-col-1,ui-grid-col-2, ui-grid-col-1,ui-grid-col-2"
+					             layout="grid"
+					             styleClass="ui-panelgrid-blank ui-fluid"
+             					 style="border:0px none; background-color:transparent;">
+
+					    <p:outputLabel for="@next" value="Nome"/>
+					    <p:inputText id="nome" value="#{consultaClienteBean.filtroPessoa.nome}" placeholder="informe o nome" />
+					
+					    <p:outputLabel for="@next" value="Nascimento"/>
+					    <p:datePicker id="nascimento" value="#{consultaClienteBean.filtroPessoa.dataNascimento}" showIcon="true"  pattern="dd/MM/yyyy"  style="width:auto"/>
+					
+					    <p:outputLabel for="@next" value="Sexo"/>
+					    <p:selectOneMenu id="selectSexo" value="#{consultaClienteBean.filtroPessoa.sexo}" >
+					        <f:selectItem itemLabel="Selecione" itemValue=""/>
+					        <f:selectItem itemLabel="Masculino" itemValue="M"/>
+					        <f:selectItem itemLabel="Feminino" itemValue="F"/>
+					    </p:selectOneMenu>
+					
+					    <p:column>
+					        <p:row>
+					            <p:commandButton update="listaCliente" icon="pi pi-search" styleClass="rounded-button ui-button-success" style=" margin-right:10px;" 
+					                             action="#{consultaClienteBean.consultar()}" />
+					            <p:commandButton update="sessaoFiltro, listaCliente" icon="pi pi-times" styleClass="rounded-button ui-button-success"  
+					                             action="#{consultaClienteBean.limparCampos()}"  />
+					        </p:row>
+					    </p:column>
+					
+					</p:panelGrid>
+
+			    </div>
+           
+	           	<div class="card">
+			        
+			        <p:divider align="left">
+	                     <div class="inline-flex align-items-center">
+	                       	<i class="pi pi-home mr-2"/>
+	                     	<b>Clientes cadastrados</b>
+	                     </div>
+	                </p:divider>
+			        
+			        <p:dataTable id="listaCliente" var="pessoa" value="#{consultaClienteBean.listaPessoa}" 
+			             emptyMessage="Nenhum registro encontrado" editable="true">
+					    
+					    <p:ajax event="rowEdit" listener="#{consultaClienteBean.onRowEdit}" update=":formConsulta:messageGrowl, :formConsulta:listaCliente"/>
+					    <p:ajax event="rowEditCancel" listener="#{consultaClienteBean.onRowCancel}" update=":formConsulta:messageGrowl"/>
+					    
+					    <p:column headerText="ID" style="display:none">
+					        <h:outputText value="#{pessoa.endereco.id}" />
+					    </p:column>
+					    
+					    <p:column headerText="Nome">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.nome}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:inputText value="#{pessoa.nome}" style="width:100%" label="Nome" required="true" maxlength="100"/>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="Nascimento">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.dataNascimento}">
+					                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+					                </h:outputText>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:calendar value="#{pessoa.dataNascimento}" style="width:100%" label="Data de Nascimento" pattern="dd/MM/yyyy"/>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="Sexo">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.sexo}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                 <p:selectOneMenu id="selectSexo" value="#{pessoa.sexo}" required="true" >
+							            <f:selectItem itemLabel="Selecione" itemValue=""/>
+							            <f:selectItem itemLabel="Masculino" itemValue="M"/>
+							            <f:selectItem itemLabel="Feminino" itemValue="F"/>
+							        </p:selectOneMenu>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="Estado">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.endereco.estado}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:selectOneMenu id="estado" value="#{pessoa.endereco.estado}" required="true" >
+					                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+					                    <f:selectItems value="#{consultaClienteBean.mapEstado}"/>
+					                </p:selectOneMenu>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="Cidade">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.endereco.cidade}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:inputText value="#{pessoa.endereco.cidade}" style="width:100%" label="Cidade" required="true" maxlength="30"/>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="Logradouro">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.endereco.logradouro}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:inputText value="#{pessoa.endereco.logradouro}" style="width:100%" label="Logradouro" required="true" maxlength="100"/>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="Número">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.endereco.numero}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:inputText value="#{pessoa.endereco.numero}" style="width:100%" label="Número" required="true" maxlength="10"/>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column headerText="CEP">
+					        <p:cellEditor>
+					            <f:facet name="output">
+					                <h:outputText value="#{pessoa.endereco.cep}"/>
+					            </f:facet>
+					            <f:facet name="input">
+					                <p:inputText value="#{pessoa.endereco.cep}" style="width:100%" label="CEP" required="true" maxlength="10"/>
+					            </f:facet>
+					        </p:cellEditor>
+					    </p:column>
+					    
+					    <p:column>
+					        <p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-outlined"  
+					        	action="#{consultaClienteBean.remover(pessoa)}" 
+					        	update=":formConsulta:messageGrowl"/>
+					    </p:column>
+					    
+					    <p:column style="width:6rem">
+					        <p:rowEditor editTitle="Editar" cancelTitle="Cancelar" saveTitle="Salvar"/>
+					    </p:column>
+					</p:dataTable>
+	
+			    </div>
+       		</h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>

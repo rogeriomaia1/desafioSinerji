@@ -1,0 +1,38 @@
+@charset "ISO-8859-1";
+
+.header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size:15px;
+}
+
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+ 
+    height:20px;
+    font-size:15px;
+    
+}
+
+ .centralizado {
+     position: absolute;
+     left: 50%;
+     top: 50%;
+     transform: translate(-50%, -50%);
+ }
+ 
+ .botoes {
+ 	padding-top: 30px;
+ 	padding-right: 20px;
+ }
+ 
+ .button-large {
+   width:120px;
+}
