@@ -18,23 +18,23 @@ Foi utilizado o JSF, Primefaces, CDI, EJB, Maven, JUnit e Postgres.
 ## Arquitetura
 ```mermaid
 
-flowchart TB; 
-  A["Páginas"] -->Controller;
-  Controller-->A["Páginas"];
+flowchart LR;
+    subgraph Controller
+        B["Bean"] --> C["Service"]
+        C --> B
+    end
 
- subgraph View
-    A["Páginas"]
-  end
+    subgraph Model
+        C --> D["DAO"]
+        D --> C
+    end
 
- subgraph Control 
-    Controller-->Service;
-    Service-->Controller;
- end
+    subgraph View
+        A["xhtml"]
+        A --> B
+        B --> A
+    end
 
- subgraph Model     
-    Service-->DAO;
-    DAO-->Service;
-  end
 ```
 
 ## Preparando o ambiente
